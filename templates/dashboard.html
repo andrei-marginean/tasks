@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Taskuri Magic</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1 class="dashboard-title">
+                    <i class="fas fa-tasks"></i>
+                    Dashboard Taskuri Magic
+                </h1>
+                <div class="refresh-button" onclick="refreshData()">
+                    <i class="fas fa-sync-alt"></i>
+                    Refresh
+                </div>
+            </div>
+        </header>
+
+        <!-- Loading Spinner -->
+        <div id="loading" class="loading-container">
+            <div class="spinner"></div>
+            <p>Loading dashboard...</p>
+        </div>
+
+        <!-- Error Message -->
+        <div id="error-message" class="error-container hidden">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>Failed to load dashboard data. Please try refreshing the page.</p>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div id="dashboard-content" class="dashboard-content hidden">
+            <!-- Statistics Overview -->
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-icon total">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="total-tasks">0</h3>
+                        <p>Total Tasks</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon overdue">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="overdue-tasks">0</h3>
+                        <p>Overdue</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon progress">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="progress-tasks">0</h3>
+                        <p>In Progress</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon done">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="done-tasks">0</h3>
+                        <p>Completed</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="main-content">
+                <!-- Pie Chart Section -->
+                <div class="chart-section">
+                    <div class="section-header">
+                        <h2>Task Status Distribution</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="taskPieChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Stage Statistics Section -->
+                <div class="stage-dashboard-section">
+                    <div class="section-header">
+                        <h2>Task Progress by Departments</h2>
+                    </div>
+                    <div id="stage-dashboard" class="stage-dashboard">
+                        <!-- Stage progress bars will be inserted here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tasks Section -->
+            <div class="tasks-section">
+                <div class="section-header">
+                    <h2>Task Details</h2>
+                    <div class="controls-section">
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="overdue">Overdue</button>
+                            <button class="filter-btn" data-filter="progress">In Progress</button>
+                            <button class="filter-btn" data-filter="done">Completed</button>
+                        </div>
+                        <div class="sort-buttons">
+                            <span class="sort-label">Sort by Date:</span>
+                            <button class="sort-btn active" data-sort="deadline-asc" title="Sort by deadline (earliest first)">
+                                <i class="fas fa-calendar-alt"></i>
+                                <i class="fas fa-arrow-up"></i>
+                            </button>
+                            <button class="sort-btn" data-sort="deadline-desc" title="Sort by deadline (latest first)">
+                                <i class="fas fa-calendar-alt"></i>
+                                <i class="fas fa-arrow-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="tasks-container" class="tasks-container">
+                    <!-- Task cards will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+</body>
+</html>
