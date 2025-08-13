@@ -255,6 +255,7 @@ class TaskDashboard {
             minute: '2-digit',
             hour12: false
         });
+        const weekday = deadline.toLocaleDateString('en-GB', { weekday: 'short' });
 
         const assigneesHtml = task.assignees.length > 0 
             ? task.assignees.map(assignee => `<span class="assignee-tag">${assignee}</span>`).join('')
@@ -302,7 +303,7 @@ class TaskDashboard {
             
             <div class="task-deadline">
                 <i class="fas fa-calendar-alt"></i>
-                <span>Deadline: ${formattedDeadline}</span>
+                <span>Deadline: ${weekday}, ${formattedDeadline}</span>
                 ${deadlineInfo}
             </div>
             
